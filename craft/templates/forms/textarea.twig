@@ -1,0 +1,10 @@
+{%- set id = (id is defined ? id : 'textarea-' ~ random()) %}
+{%- set requiredJs = (requiredJs is defined ? requiredJs : null) %}
+
+ 
+<textarea 
+	class="materialize-textarea"
+	{%- if id is defined %} id="{{ id }}"{% endif %}
+	{%- if handle is defined %} name="{{ handle }}"{% endif %} 
+	{%- if required is defined and required %} required {% endif %}>{{ value is defined ? value : null }}</textarea>
+	<label for="{{ id }}">{{- label|raw -}}</label> 

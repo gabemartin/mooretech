@@ -1,0 +1,143 @@
+{#
+ # News entry template
+ # -------------------
+ #
+ # This template gets loaded whenever a News entry’s URL is
+ # requested. That’s because the News section’s Template setting is
+ # set to “news/_entry”, the path to this template.
+ #
+ # When this template is loaded, it will already have an ‘entry’
+ # variable, set to the requested News entry.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+
+{% extends "_layout" %}
+
+{% block content %}
+
+
+
+
+
+
+	<article>
+		<h1>{{ entry.title }}</h1> 
+		<h2>{{ entry.placementPercentage }}% placement rates for graduates from this program.*</h2>
+
+		{% if entry.videoEmbed %} 
+			</article></main></div></div>
+			<div class="wide-container">
+				<div class="container">
+					<div class="row">
+						<div class="col s12">
+							<div class="video-container ">
+								{{ entry.videoEmbed|raw }}
+							</div> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row"></div><div class="container"><main id="content" role="main" class="col s12"><article>
+		{% endif %}
+
+		<div class="row hay">
+			<div class="col m8">
+				{{ entry.body }} 
+				<!-- Modal Trigger -->
+				<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Show Gainful Employment Information</a>
+			</div>
+			<div class="col m4 sidebar-program-list">
+				<h5>Programs for {{ upcomingSchoolYear.schoolYear }}</h5>
+				{% for entry in craft.entries.section('programs').find() %}
+					<div class="row"> 
+						<div class="col l3 hide-on-med-and-down">
+						<figure>
+							{% set image = entry.thumbnail.first() %}
+							{% if image %}
+								<img src="{{ image.getUrl('thumb') }}" width="{{ image.getWidth('thumb') }}" height="{{ image.getHeight('thumb') }}" alt="{{ image.title }}" class="responsive-img">
+							{% endif %}
+						</figure>
+						</div>
+						<div class="col l9 valign-wrapper"> 
+								<p class=" valign"><a href="{{ entry.url }}">{{ entry.title }}</a></p>   
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+
+
+		
+	</article>
+
+	
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content" id="GEI"> 
+	<center>
+
+		<h2>William R Moore College of Technology</h2>
+		<p>OPE ID 011553</p>
+		<h3>Gainful Employment Information</h3> 
+		<p>For the period 07-01-2012 to 06-30-13</p> 
+	</center>
+	<h1>{{ entry.program }}</h1>
+	<p><strong>Program Level:</strong> {{ entry.programLevel }}</p>
+	<p><strong>Program Length:</strong> {{ entry.programLength }}</p>
+
+	<p class="bump"><strong>Training and Employment related job codes and titles:</strong></p>
+
+	<p><strong>Classification of Instructional Programs:<br></strong> {{ entry.classificationOfInstructionalPrograms }}</p>
+	<p><strong>Standard Occupational Classification:<br></strong> {{ entry.standardOccupationalClassification }}</p>
+
+	<ul>
+	{% for block in entry.questionsAndAnswers %}
+
+		{% if block.type == "question" %}
+			<li>
+				<div class="question">
+					<strong>{{ block.question }} </strong>
+				</div>
+				<div class="answer">
+					{{ block.answer }} 
+				</div> 
+			</li>
+		{% endif %}
+
+	{% endfor %}
+	</ul>
+
+	<div class="loan-programs">
+		{{ entry.loanPrograms }}
+	</div>
+
+	<p class="notice"><strong>The Maintenance Technology program is designed to be completed in one year.</strong></p>
+
+	<p class="graduation-statistics">
+		<em>{{ entry.graduationStatistics }}</em>
+	</p> 
+
+	<p class="chances-of-getting-a-job">
+		{{ entry.chancesOfGettingAJob }}
+	</p>
+
+	<ul class="stronglist">
+		<li>The placement rate for students graduating in this program on July 25, 2013 was {{ entry.placementPercentage }}%.</li>
+		<li>Students were typically placed in jobs as Building Maintenance and Repair workers.</li>
+		<li>Placement rates are based on graduates who were employed within 180 days of completion.</li>
+		<li>Completers were tracked by using completion surveys with a response rate of 100%.</li>
+		<li>The college is accredited by Council on Occupational Education and has been for over 40 years. </li>
+	</ul> 
+    </div>
+
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-grey btn ">CLOSE</a>
+    </div>
+  </div>
+
+{% endblock %}

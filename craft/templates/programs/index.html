@@ -1,0 +1,36 @@
+{#
+ # News index template
+ # -------------------
+ #
+ # This template is loaded whenever http://example.com/programs is
+ # requested, because it is located at programs/index.html in your
+ # craft/templates/ folder.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+
+{% extends "_layout" %}
+{% set title = "Programs" %}
+
+{% block content %}
+	<h1>Programs</h1>
+
+	{% for entry in craft.entries.section('programs').find() %}
+		<article class="row dividers"> 
+			<div class="col s4 m2 circular-thumbs">
+			<figure>
+				{% set image = entry.thumbnail.first() %}
+				{% if image %}
+					<img src="{{ image.getUrl('thumb') }}" width="{{ image.getWidth('thumb') }}" height="{{ image.getHeight('thumb') }}" alt="{{ image.title }}" class="responsive-img circle">
+				{% endif %}
+			</figure>
+			</div>
+			<div class="col s12 m8">
+			<h2><a href="{{ entry.url }}">{{ entry.title }}</a></h2> 
+			<p><em><strong>{{ entry.placementPercentage }}%</strong> placement rates for graduates from this program.*</em></p>
+			<p>{{ entry.shorterDescription }} </p>
+			</div>
+		</article>
+	{% endfor %}
+{% endblock %}

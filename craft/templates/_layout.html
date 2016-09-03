@@ -16,58 +16,132 @@
 	<title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
 	<link rel="home" href="{{ siteUrl }}" />
 
-	<style type="text/css">
-		body { margin: 50px; font-family: sans-serif; background: #fff; }
-		#container { margin: 0 auto; width: 700px;
-			-webkit-box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-			        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-		}
+    <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One|Yrsa" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Cardo:400,700,400italic' rel='stylesheet' type='text/css'>
+	<!--Import Google Icon Font-->
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import minimized css--> 
+	<link type="text/css" rel="stylesheet" href="/assets/css/main.min.css"  media="screen,projection"/>
 
-		#header, #footer { display: block; color: #fff; background: #da5a47; }
-		#header a, #footer a { color: #fff; }
-		#header { border-radius: 7px 7px 0 0; padding: 25px; }
-		#header:after { content: '.'; display: block; height: 0; clear: both; visibility: hidden; }
-		#header a { text-decoration: none; }
-		#header h1 { float: left; margin: 0; font-weight: normal; font-size: 30px; line-height: 1; }
-		#header nav { display: block; float: right; }
-		#header nav ul { margin: 0; list-style-type: none; }
-		#header nav ul li { float: left; margin-left: 20px; }
-		#header nav ul li a { display: block; margin-top: 4px; line-height: 22px; }
-		#header nav ul li a:hover,
-		#header nav ul li a.active { border-bottom: 2px solid #fff; }
-		#header nav ul li a.active { cursor: default; }
-
-		#content { display: block; padding: 25px; background: #fff; }
-		#content h1 { margin-top: 0; font-size: 35px; font-weight: bold; }
-		#content a { color: #da5a47; text-decoration: none; }
-		#content a:hover { text-decoration: underline; }
-
-		#footer { border-radius: 0 0 7px 7px; padding: 15px; font-size: 12px; text-align: center; }
-	</style>
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+	
 </head>
 
-<body>
-	<div id="container">
-		<header id="header">
-			<h1><a href="{{ siteUrl }}">{{ siteName }}</a></h1>
+<body> 
 
-			<nav>
-				<ul>
-					<li><a href="{{ url('news') }}" {% if craft.request.firstSegment == 'news' %}class="active"{% endif %}>News</a></li>
+	<header>
+		<nav class="top-nav"> 
+			<div class="container">
+			<a href="{{ siteUrl }}" class="brand-logo left"><img src="/assets/images/logo.png" alt="{{ siteName }}"></a> 
+			<a href="#" data-activates="mobile-demo" class="button-collapse right"><i class="material-icons">menu</i></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li {% if craft.request.firstSegment == '/' %}class="active"{% endif %}><a href="{{ url('/') }}">Home</a></li>
+				<li {% if craft.request.firstSegment == 'programs' %}class="active"{% endif %}><a href="{{ url('programs') }}">Programs</a></li>
+				<li {% if craft.request.firstSegment == 'admissions' %}class="active"{% endif %}><a href="{{ url('admissions') }}">Admissions</a></li>
+				<li {% if craft.request.firstSegment == 'about' %}class="active"{% endif %}><a href="{{ url('about') }}">About</a></li>
+				<li {% if craft.request.firstSegment == 'contact-us' %}class="active"{% endif %}><a href="{{ url('contact-us') }}">Contact Us</a></li>
+			</ul>
+			</div> 
+			<ul class="side-nav" id="mobile-demo">
+				<li {% if craft.request.firstSegment == '/' %}class="active"{% endif %}><a href="{{ url('/') }}">Home</a></li>
+				<li {% if craft.request.firstSegment == 'programs' %}class="active"{% endif %}><a href="{{ url('programs') }}">Programs</a>
+					<ul>
+						<li><a {% if craft.request.lastSegment == 'diploma-and-certificate' %}class="active" {% endif %} href="/programs/diploma-and-certificate">Diploma and Certificate</a></li>
+						<li><a {% if craft.request.lastSegment == 'associate-degree' %}class="active" {% endif %} href="/programs/associate-degree">Associate Degree</a></li> 
+						{% for entry in craft.entries.section('programs').find() %}
+							<li><a href="{{ entry.url }}">{{ entry.title }}</a></li>
+						{% endfor %}
+					</ul>
+
+
+
+
+
+				</li>
+				<li {% if craft.request.firstSegment == 'admissions' %}class="active"{% endif %}><a href="{{ url('admissions') }}">Admissions</a>
+				    <ul>
+						<li><a {% if craft.request.lastSegment == 'calendar' %}class="active" {% endif %} href="/admissions/calendar">Calendar</a></li>
+						<li><a {% if craft.request.lastSegment == 'college-catalog' %}class="active" {% endif %} href="/admissions/college-catalog">College Catalog</a></li>
+						<li><a {% if craft.request.lastSegment == 'fees' %}class="active" {% endif %} href="/admissions/fees">Fees</a></li>
+						<li><a {% if craft.request.lastSegment == 'enrollment-steps' %}class="active" {% endif %} href="/admissions/enrollment-steps">Enrollment</a></li>
+						<li><a {% if craft.request.lastSegment == 'financial-aid' %}class="active" {% endif %} href="/admissions/financial-aid">Financial Aid</a></li>
+					</ul> 
+				</li>
+				<li {% if craft.request.firstSegment == 'about' %}class="active"{% endif %}><a href="{{ url('about') }}">About</a></li>
+				<li {% if craft.request.firstSegment == 'contact-us' %}class="active"{% endif %}><a href="{{ url('contact-us') }}">Contact Us</a></li>
+			</ul>
+		</nav> 
+	</header> 
+
+
+	<div class="container"> 
+	 	<div class="row relative">
+
+
+			{% if craft.request.firstSegment == 'admissions' %} 
+		    <nav class="col s12 sub-nav">
+				<ul class="right">
+					<li><a {% if craft.request.lastSegment == 'calendar' %}class="active" {% endif %} href="/admissions/calendar">Calendar</a></li>
+					<li><a {% if craft.request.lastSegment == 'college-catalog' %}class="active" {% endif %} href="/admissions/college-catalog">College Catalog</a></li>
+					<li><a {% if craft.request.lastSegment == 'fees' %}class="active" {% endif %} href="/admissions/fees">Fees</a></li>
+					<li><a {% if craft.request.lastSegment == 'enrollment-steps' %}class="active" {% endif %} href="/admissions/enrollment-steps">Enrollment</a></li>
+					<li><a {% if craft.request.lastSegment == 'financial-aid' %}class="active" {% endif %} href="/admissions/financial-aid">Financial Aid</a></li>
 				</ul>
-			</nav>
-		</header>
+			</nav> 
+			{% endif %}
+			{% if craft.request.firstSegment == 'programs' %} 
+		    <nav class="col s12 sub-nav">
+				<ul class="right">
+					<li><a {% if craft.request.lastSegment == 'diploma-and-certificate' %}class="active" {% endif %} href="/programs/diploma-and-certificate">Diploma and Certificate</a></li>
+					<li><a {% if craft.request.lastSegment == 'associate-degree' %}class="active" {% endif %} href="/programs/associate-degree">Associate Degree</a></li> 
+				</ul>
+			</nav> 
+			{% endif %}
 
-		<main id="content" role="main">
-			{% block content %}
-				<p>If you see me, you haven’t set your <code>{% verbatim %}{% block content %}…{% endblock %}{% endverbatim %}</code> yet.</p>
-				<p>See Twig’s <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">Template Inheritance</a> documentation for an explanation.</p>
-			{% endblock %}
-		</main>
 
-		<footer id="footer">
-			Copyright {{ now.year }} {{ craft.request.serverName | ucfirst }}. All rights reserved  •  Built with <a href="http://craftcms.com">Craft</a>
-		</footer>
+
+			
+			<main id="content" role="main" class="col s12 content-top">
+				{% block content %}
+					<p>If you see me, you haven’t set your <code>{% verbatim %}{% block content %}…{% endblock %}{% endverbatim %}</code> yet.</p>
+					<p>See Twig’s <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">Template Inheritance</a> documentation for an explanation.</p>
+				{% endblock %}
+				{% set myNote %}{% spaceless %}
+				  {% if loop.last %}
+				    <p>The last entry always stays full width, even in the 2-column layout. See the <a href="{{ url('style-guide') }}">Style Guide</a> for layout examples.</p>
+				  {% endif %}
+				{% endspaceless %}{% endset %}
+
+				{{ craft.Adminbar.edit(entry, {
+				  devNote: myNote,
+				}) }}
+			</main>
+
+	 	</div>
 	</div>
+	<footer id="footer" class="col s12">
+		<div class="container">
+			Copyright {{ now.year }} {{ craft.request.serverName | ucfirst }}. All rights reserved &nbsp;&bull;&nbsp; Moore Tech
+		</div>
+	</footer>
+
+
+
+
+	<!--Import jQuery before materialize.js-->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="/assets/node_modules/materialize-css/dist/js/materialize.min.js"></script>
+	<script>
+	$( document ).ready(function(){
+    	$('.carousel.carousel-slider').carousel({full_width: true});
+		$(".button-collapse").sideNav();
+
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal-trigger').leanModal();
+  
+	});
+	</script>
 </body>
 </html>

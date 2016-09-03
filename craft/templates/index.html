@@ -20,14 +20,103 @@
 {% extends "_layout" %}
 
 {% block content %}
-	<h1>{{ entry.title }}</h1>
 
-	{{ entry.body }}
 
-	<h2>Recent News</h2>
-	<ul>
-		{% for entry in craft.entries.section('news').limit(5).find() %}
-			<li><a href="{{ entry.url }}">{{ entry.title }}</a></li>
-		{% endfor %}
-	</ul>
+
+
+ 
+
+
+</main></div></div>
+<div id="homepage-feature">
+	<div class="container">
+		<div class="row">
+			<div class="col m5 s12">
+				<h1>{{ entry.title }}</h1> 
+				<p>{{ entry.body }}</p>
+				<h2>{{ entry.shorterDescription }}</h2>
+				<p><a class="btn" href="{{ entry.homePageCallToActionUrl }}">{{ entry.homepageCallToActionText }}</a></p>
+			</div> 
+		</div>
+	</div>
+</div>
+<div class="row"></div><div class="container"><main id="content" role="main" class="col s12 homepage-program-grid">
+
+		<div class="row">
+			<h1 class="center">BECOME A PROFESSIONAL IN:</h1>
+			{% for entry in craft.entries.section('programs').find() %}
+				<div class="col m6 l4">
+					<div class="card hoverable">
+						<a href="{{ entry.url }}">
+							<div class="card-image">
+								{% set image = entry.thumbnail.first() %}
+								{% if image %}
+									<img src="{{ image.getUrl }}" width="{{ image.getWidth }}" height="{{ image.getHeight }}" alt="{{ entry.title }}" class="responsive-img circle">
+								{% endif %}
+								<span class="card-title"><span class="bg">{{ entry.title }}</span></span>
+							</div> 
+						</a>
+					 </div>
+				</div> 
+			{% endfor %} 
+		</div>
+
+
+	<h2>Programs for the {{ upcomingSchoolYear.schoolYear }} school year:</h2> 
+
+	<table class="responsive-table bordered programs">
+		<thead>
+			<tr> 
+				<th nowrap data-field="program">Program</th>
+				<th data-field="related_occupations">Related<br>Occupations</th>
+				<th nowrap data-field="soc_code">SOC Code</th>
+				<th nowrap data-field="placement">Placement</th> 
+			</tr>
+		</thead>
+		<tbody>
+			{% for entry in craft.entries.section('programs').limit(20).find() %}
+
+				<tr> 
+					<td><strong><a href="{{ entry.url }}">{{ entry.title }}</a></strong></td>
+					<td>
+						{% set tags = entry.relatedOccupations %}
+						{% if tags | length %} 
+							{% for tag in tags %}
+								<div class="chip">{{ tag }}</div>
+							{% endfor %}
+						{% endif %}
+					</td>
+					<td nowrap>{{ entry.socCode }}</td>
+					<td class="right">{{ entry.placementPercentage }}% </td> 
+
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+<!-- <div class="lyr lyr-materialize-red"></div>
+<div class="lyr lyr-red"></div>
+<div class="lyr lyr-pink"></div>
+<div class="lyr lyr-purple"></div>
+<div class="lyr lyr-deep-purple"></div>
+<div class="lyr lyr-indigo"></div>
+<div class="lyr lyr-blue"></div>
+<div class="lyr lyr-light-blue"></div>
+<div class="lyr lyr-cyan"></div>
+<div class="lyr lyr-teal"></div>
+<div class="lyr lyr-green"></div>
+<div class="lyr lyr-light-green"></div>
+<div class="lyr lyr-lime"></div>
+<div class="lyr lyr-yellow"></div>
+<div class="lyr lyr-amber"></div>
+<div class="lyr lyr-orange"></div>
+<div class="lyr lyr-deep-orange"></div>
+<div class="lyr lyr-brown"></div>
+<div class="lyr lyr-blue-grey"></div>
+<div class="lyr lyr-grey"></div>
+<div class="lyr lyr-shade"></div>
+ -->
+  
+
+
 {% endblock %}

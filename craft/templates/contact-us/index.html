@@ -1,0 +1,104 @@
+{#
+ # Homepage template
+ # ---------------
+ #
+ # When this template gets loaded, it will be because someone has accessed
+ # http://yoursite.com/ (without any URI). Craft checks to see if you have
+ # a Single section set to be the Homepage (as you do, by default), and
+ # loads the section’s Template (this file). A special ‘entry’ variable
+ # will already be set for you, assigned to the Homepage entry.
+ #
+ # It's worth noting that even if you didn't have a Homepage Single section,
+ # as long as this template remains at craft/templates/index.html, it
+ # would still be the one to get loaded when accessing http://yoursite.com/,
+ # albeit without an ‘entry’ variable already set for you.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+
+{% extends "_layout" %}
+
+{% block content %} 
+
+<h1>{{ entry.title }}</h1>
+ 
+
+ <div class="row">
+   <div class="col m8">
+     
+
+    {% set form = craft.formBuilder2.getFormByHandle('contact') %}
+    {% set formSettings = form.formSettings %}
+    {% set spamProtectionSettings = form.spamProtectionSettings %}
+    {% set tabs = form.fieldLayout.getFieldLayout().getTabs() %}
+    {% set scripts = craft.formBuilder2.includeScripts(form) %}
+
+    <form method="post" accept-charset="utf-8" name="{{ form.handle }}" class="formbuilder2" id="{{ form.handle }}"{% if formSettings.hasFileUploads == '1' %} enctype="multipart/form-data"{% endif %}>
+      <input type="hidden" name="action" value="formBuilder2/entry/submitEntry">
+      <input type="hidden" name="redirect" data-custom-redirect="{{ formSettings.formRedirect.customRedirect }}" value="{{ formSettings.formRedirect.customRedirectUrl }}">
+      <input type="hidden" name="formHandle" value="{{ form.handle }}">
+      {% if spamProtectionSettings.spamTimeMethod == '1' %}<input type="hidden" name="spamTimeMethod" value="{{ 'now'|date('U') }}">{% endif %}
+      {% if spamProtectionSettings.spamHoneypotMethod == '1' %}<div style="display:none;"><label for="email-addresss-new">{{ spamProtectionSettings.spamHoneypotMethodMessage }}</label><input name="email-address-new" value="" id="email-addresss-new"></div>{% endif %}
+      {{ getCsrfInput() }}
+      
+      {# Fields #}
+      {% for tab in tabs %}
+        {% set fields = tab.getFields() %} 
+          {% for field in fields %}  
+
+              {% if field.id == 274 %}
+                <div class="row">
+                  <div class="input-field col m6 s12"> 
+                    {% set input = craft.formBuilder2.getInputHtml(field) %}
+                    {{ input |raw }}
+                  </div>
+              {% endif %}
+
+              {% if field.id == 275 %}
+                  <div class="input-field col m6 s12">
+                    {% set input = craft.formBuilder2.getInputHtml(field) %}
+                    {{ input |raw }}
+                  </div>
+                </div>
+              {% endif %} 
+                
+              {% if field.id == 276 %}
+                <div class="row">
+                  <div class="input-field col s12">
+                    {% set input = craft.formBuilder2.getInputHtml(field) %}
+                    {{ input |raw }}
+                  </div>
+                </div>
+              {% endif %} 
+
+          {% endfor %}  
+      {% endfor %}
+
+      {# Errors/Success Messages #}
+      <div class="notifications">
+        <p class="notification error-message">{{ craft.session.getFlash('error') | raw }}</p>
+        <p class="notification success-message">{{ craft.session.getFlash('success') | raw }}</p>
+        {% set errors = (errors is defined ? errors : null) %}
+        {% if errors %}
+        <ul class="errors">
+          {% for error in errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+
+      <button type="submit" class="btn-large waves-effect waves-light">{% if formSettings.submitButtonText %}{{ formSettings.submitButtonText }}{% else %}Submit Message{% endif %} <i class="material-icons right">send</i></button>
+    </form>
+
+   </div>
+   <div class="col m4 sidebar">
+      {% for block in entry.headerAndDescriptionMatrix %} 
+        <h5>{{ block.header }}</h5>
+        {{ block.description }}
+      {% endfor %}
+   </div>
+ </div>
+
+{% endblock %}

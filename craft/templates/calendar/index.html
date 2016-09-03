@@ -1,0 +1,11 @@
+{#
+# Calendar template
+# ---------------
+#}
+
+{% extends "_layout" %}
+
+{% block content %}
+	<h1>{{ entry.title }}</h1>   
+	<div class="video-container">{{ entry.calendarEmbed|raw }} </div>
+{% endblock %}

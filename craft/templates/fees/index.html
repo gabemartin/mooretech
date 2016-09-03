@@ -1,0 +1,113 @@
+{#
+ # News index template
+ # -------------------
+ #
+ # This template is loaded whenever http://example.com/programs is
+ # requested, because it is located at programs/index.html in your
+ # craft/templates/ folder.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+
+{% extends "_layout" %} 
+
+{% block content %}
+	<h1>Fees</h1>
+ 
+		<article>
+			<h2>{{ entry.title }}</h2>  
+
+	 
+ 
+
+			<table class="bordered fee-table">
+				<thead>
+					<tr>
+						<th>Day Student</th>
+						<th class="amt">Registration Fee</th>
+						<th class="amt">Tuition Fee</th>
+						<th class="amt">Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for block in entry.feesMatrix %} 
+						{% if block.type == "studentType" %}
+							{% if block.dayOrNight == "day" %}
+								<tr>
+									<td>{{ block.description }}</td>
+									<td class="amt">{{ block.registrationFee }}</td>
+									<td class="amt">{{ block.tuitionFee }}</td>
+									<td class="amt">${{ 
+														block.registrationFee | replace({
+															'$': '', ',
+															': ''
+														}) + 
+														block.tuitionFee | replace({
+															'$': '', 
+															',': ''
+														})
+													}}</td>
+								</tr>
+							{% endif %} 
+						{% endif %} 
+					{% endfor %}  
+				</tbody>
+			</table>      
+
+			<table class="bordered fee-table">
+				<thead>
+				<tr>
+					<th>Night Student</th>
+					<th class="amt">Registration Fee</th>
+					<th class="amt">Tuition Fee</th>
+					<th class="amt">Total</th>
+				</tr>
+				</thead>
+				<tbody>
+					{% for block in entry.feesMatrix %} 
+						{% if block.type == "studentType" %}
+							{% if block.dayOrNight == "night" %}
+								<tr>
+									<td>{{ block.description }}</td>
+									<td class="amt">{{ block.registrationFee }}</td>
+									<td class="amt">{{ block.tuitionFee }}</td> 
+									<td class="amt">${{ 
+														block.registrationFee | replace({
+															'$': '', ',
+															': ''
+														}) + 
+														block.tuitionFee | replace({
+															'$': '', 
+															',': ''
+														})
+													}}</td>
+								</tr>
+							{% endif %} 
+						{% endif %} 
+					{% endfor %}  
+				</tbody>
+			</table>
+		
+	{% for block in entry.feesMatrix %} 
+		{% if block.type == "otherFees" %}
+			<p><strong>{{ block.fee }}</strong> - {{ block.amount }}</p>
+		{% elseif block.type == "text" %}
+			{{ block.copy }}
+		{% endif %} 
+	{% endfor %}  
+
+
+
+		</article> 
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

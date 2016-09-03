@@ -1,0 +1,299 @@
+@import '../node_modules/materialize-css/sass/materialize.scss' 
+
+$black     : color("shades", "black")
+$mt-yellow : #CC9900
+$mt-blue : #006c94
+h1, h2, h3, h4, h5, h6
+	color: color("blue-grey", "darken-3") 
+*
+	-webkit-font-smoothing: antialiased
+	-moz-osx-font-smoothing: grayscale
+h6, th 
+	text-transform: uppercase
+	font-weight: normal
+	letter-spacing: -1px
+	font-family: 'Montserrat', sans-serif
+	font-size: .7rem
+th  
+	vertical-align: bottom
+td 
+	vertical-align: top  
+	font-family: 'Montserrat', sans-serif
+	font-size: .7rem
+
+strong
+	font-weight: bold   
+nav 
+	.brand-logo.left
+		background-color: #FFF
+		padding: 20px 30px 0 30px 
+		width: 200px
+		display: block
+		box-shadow: 0 0 10px rgba(#000, .3)
+		border-radius: 0 0 6px 6px
+	img
+		max-width: 100%
+	ul 
+		a 
+			font-family: 'Montserrat', sans-serif
+			font-size: .8rem
+			font-weight: normal
+		li.active 
+			background-color: $mt-yellow
+			a
+				color: darken($mt-yellow, 40)
+
+ul.stronglist li 
+	font-weight: bold
+
+main#content   
+	&.content-top
+		padding-top: 3rem
+	&.homepage-program-grid
+		padding-top: 0
+	.modal .modal-content 
+
+		@media #{$medium-and-up} 
+			padding: 50px 
+		font-size: 90%
+		ul 
+			padding-left: 0
+		h2, h3
+			font-size: 1rem
+		h1 
+			font-size: 1.8rem
+			text-align: center 
+			color: $black 
+			margin: 0
+			padding-top: 1rem
+
+		p, li 
+			font-size: .8rem
+			&.bump
+				font-size: 1rem
+				border-bottom: 1px solid #ccc
+		.answer p 
+			margin-top: 0 
+
+
+	.card 
+		.card-title 
+			font-family: 'Alfa Slab One',serif
+			letter-spacing: 1px
+			text-shadow: 1px 2px 2px #000
+			font-weight: 100 
+			display: block
+			width: 100%
+			@media #{$large-and-up}  
+				font-size: 1rem 
+				 
+			line-height: 1.4
+			.bg 
+				background-color: rgba(#000, .3)
+
+		.card-content 
+			p 
+				font-size: .8rem
+				line-height: 1.4
+		.card-action a
+			font-size: 1rem
+			text-transform: none
+			color: #039be5
+			font-family: 'Montserrat', sans-serif
+			font-size: .7rem 
+	ul 
+		@extend .browser-default 
+		padding-left: 2rem
+	h1
+		font-size: 2rem
+		border-bottom: 1px solid #ccc 
+		padding-bottom: 1rem
+		color: $mt-yellow
+	h1.center 
+		color: darken($mt-blue, 5) 
+		font-size: 1.4rem
+	h2 
+		font-size: 1.6rem
+	h3 
+		font-size: 1.2rem
+	p, li
+		font-size: .9rem
+		line-height: 1.8
+
+	.sidebar 
+		h5 
+			font-size: 1rem
+			margin-bottom: .5rem
+		p 
+			margin: 0 0 2rem 0
+	.sidebar-program-list, .sidebar-college-catalog-toc
+		>div 
+			border-bottom: 1px solid #eee 
+			padding-top: .5rem 
+			padding-bottom: .5rem
+			margin-bottom: 1px 
+			&:last-child 
+				border-bottom: none
+		h5
+			border-bottom: 1px solid $black
+			padding-bottom: .3rem
+			font-size: 1rem
+		p 
+			font-family: 'Montserrat', sans-serif
+			line-height: 1.2 
+			margin: 0
+			padding: 0
+		ul 
+			padding-left: 1rem
+		li 
+			line-height: 1.2 
+			margin-bottom: 1rem
+			font-family: 'Montserrat', sans-serif
+			font-size: .8rem
+		.valign-wrapper 
+			min-height: 50px
+
+.dividers 
+	border-bottom: 1px solid #ccc
+	padding-bottom: 1rem
+
+
+.fee-table 
+	th 
+		background-color: #eee
+	td, p 
+		font-size: 1rem
+	.amt 
+		width: 20% 
+		text-align: center
+	p 
+		margin: 0
+		padding: 0
+.wide-container 
+	background-color: $mt-yellow
+figure
+	margin: 0
+	padding: 0
+main#content #gainful-employment 
+	display: none
+body.showGEI
+	overflow: hidden
+	main#content #gainful-employment 
+		display: block
+.bodyCopy 
+	max-width: 800px
+footer#footer
+	border-top: 1px solid $black
+	padding-top: 2rem
+	margin-top: 2rem
+	color: $black  
+	font-family: 'Montserrat', sans-serif
+	font-size: .7rem
+.right-aligned-image 
+	@extend .responsive-img 
+	float: right 
+	margin: 0 0 2rem 2rem
+	@media #{$medium-and-up}  
+		width: 50%
+.left-aligned-image 
+	@extend .responsive-img 
+	float: left 
+	margin: 0 2rem 2rem 0
+
+.side-nav ul  
+	list-style: bullet
+	li 
+		a
+			font-weight: normal
+			font-size: .6rem
+			line-height: 1.2
+			padding: 10px 2rem
+.notice 
+	background-color: lighten(yellow, 40)
+.relative 
+	position: relative
+.sub-nav  
+	@extend .hide-on-med-and-down
+	position: absolute
+	font-family: 'Montserrat', sans-serif
+	font-size: 1rem
+	background-color: transparent
+	box-shadow: none 
+	a 
+		color: $black
+		&:hover
+			background-color: transparent
+			border-bottom: 2px solid #eee
+		&.active
+			border-bottom: 2px solid $mt-yellow
+.lyr 
+	width: 50px
+	height: 50px
+	margin: 10px
+	display: inline-block
+.lyr-materialize-red 
+	background-color: color("materialize-red", "base")
+.lyr-red 
+	background-color: color("red", "base")
+.lyr-pink 
+	background-color: color("pink", "base")
+.lyr-purple 
+	background-color: color("purple", "base")
+.lyr-deep-purple 
+	background-color: color("deep-purple", "base")
+.lyr-indigo 
+	background-color: color("indigo", "base")
+.lyr-blue 
+	background-color: color("blue", "base")
+.lyr-light-blue 
+	background-color: color("light-blue", "base")
+.lyr-cyan 
+	background-color: color("cyan", "base")
+.lyr-teal 
+	background-color: color("teal", "base")
+.lyr-green 
+	background-color: color("green", "base")
+.lyr-light-green 
+	background-color: color("light-green", "base")
+.lyr-lime 
+	background-color: color("lime", "base")
+.lyr-yellow 
+	background-color: color("yellow", "base")
+.lyr-amber 
+	background-color: color("amber", "base")
+.lyr-orange 
+	background-color: color("orange", "base")
+.lyr-deep-orange 
+	background-color: color("deep-orange", "base")
+.lyr-brown 
+	background-color: color("brown", "base")
+.lyr-blue-grey 
+	background-color: color("blue-grey", "base")
+.lyr-grey 
+	background-color: color("grey ", "base")
+
+a.btn 
+	font-family: 'Montserrat', sans-serif
+	font-size: .8rem
+
+#homepage-feature
+	background-color: $mt-blue
+	background: $mt-blue url('/assets/images/general/homepage-feature-bgi.jpg') center center no-repeat
+	background-size: cover
+	padding: 4rem 0
+	margin-top: -4.1rem
+	h1, h2, p 
+		color: #fff
+	h1 
+		letter-spacing: 1px
+		font-size: 2rem
+	h2 
+		font-family: 'Alfa Slab One',serif
+		font-size: 1.2rem
+	a.btn 
+		background-color: #FFF
+		color: $mt-blue
+	img 
+		margin: 0
+		padding: 0
+		display: block

@@ -1,0 +1,74 @@
+{#
+ # News index template
+ # -------------------
+ #
+ # This template is loaded whenever http://example.com/programs is
+ # requested, because it is located at programs/index.html in your
+ # craft/templates/ folder.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+
+{% extends "_layout" %}
+{% set title = "College Catalog" %}
+
+{% block content %}
+	<h1>College Catalog</h1>
+	<div class="row">
+		<div class="col s12">
+			{% for block in entry.contentMatrix %} 
+				{% if block.type == "text" %}
+					{{ block.bodyCopy }} 
+				{% endif %}
+			{% endfor %}  
+			{{ craft.Adminbar.edit(entry, { devNote: myNote, }) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col m4 sidebar-college-catalog-toc">
+			<h5>Contents</h5>
+			<ul>
+			{% for entry in craft.entries.section('collegeCatalogEntries').find() %}
+				<li><a href="#jump{{ entry.id }}">{{ entry.title }}</a></li>
+			{% endfor %}
+			</ul>
+		</div>
+		<div class="col m8">
+			
+
+	{% for entry in craft.entries.section('collegeCatalogEntries').find() %}
+		<a name="jump{{ entry.id }}"></a>
+		<article>
+			<h3>{{ entry.title }}</h3> 
+
+			{% for block in entry.contentMatrix %}
+
+			    {% if block.type == "text" %}
+
+			        {{ block.bodyCopy }} 
+
+				{{ craft.Adminbar.edit(entry, { devNote: myNote, }) }}
+
+			    {% elseif block.type == "insertImage" %}
+
+			        {% set image = block.rightAlignedImage.first() %}
+			        {% if image %}
+			            <img src="{{ image.getUrl }}" width="{{ image.getWidth }}" height="{{ image.getHeight }}" alt="{{ image.title }}" class="right-aligned-image responsive-img">
+			        {% endif %}
+
+			    {% elseif block.type == "insertVideo" %}
+
+			        {{ block.youtubeEmbed }}
+
+			    {% endif %}
+
+			{% endfor %}
+
+
+
+		</article>
+	{% endfor %}
+		</div>
+	</div>
+{% endblock %}
