@@ -21,17 +21,45 @@
 
 {% block content %}
 
+ {% set mobile = {
+    mode: 'fit',
+    width: 1000, 
+    quality: 75, 
+} %}
 
+
+<style> 
+{% set sizes = ['1200', '1400', '1600', '1800', '2000', '2500', '3000', '3500'] %}
+{% set image = entry.featureImage.first() %}
+ {% set mobile = {
+    mode: 'fit',
+    width: 1200, 
+    quality: 80, 
+} %}
+#homepage-feature { background-image: url('{{ image.getUrl(mobile) }}'); }
+
+{% for breakpoints in sizes %}
+
+ {% set mobile = {
+    mode: 'fit',
+    width: breakpoints, 
+    quality: 80, 
+} %}
+
+@media (min-width: {{ breakpoints }}px) { #homepage-feature { background-image: url('{{ image.getUrl(mobile) }}'); } } 
+
+{% endfor %}
+
+</style>
 
 
  
-
 
 </main></div></div>
 <div id="homepage-feature">
 	<div class="container">
 		<div class="row">
-			<div class="col m5 s12">
+			<div class="col s12 m9 l6">
 				<h1>{{ entry.title }}</h1> 
 				<p>{{ entry.body }}</p>
 				<h2>{{ entry.shorterDescription }}</h2>
@@ -61,8 +89,18 @@
 			{% endfor %} 
 		</div>
 
+	<div class="row">
+		<div class="col m12"> 
+			<p class="messaging-system-cta"><a href="/documents/moore-tech-notification-messaging-system">
+				<span class="messaging-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+				</span>
+				All Students, Staff, and Faculty need to sign up for the Moore Tech Notification Messaging System.</a>
+			</p>			
+		</div>
+	</div>
 
-	<h2>Programs for the {{ upcomingSchoolYear.schoolYear }} school year:</h2> 
+	<h2 class="center">Programs for the {{ upcomingSchoolYear.schoolYear }} school year:</h2> 
 
 	<table class="responsive-table bordered programs">
 		<thead>

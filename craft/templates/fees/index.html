@@ -11,14 +11,14 @@
  #}
 
 {% extends "_layout" %} 
-
+{% set title = "Fees" %}
 {% block content %}
 	<h1>Fees</h1>
  
 		<article>
 			<h2>{{ entry.title }}</h2>  
 
-	 
+	 		{{ entry.body }}
  
 
 			<table class="bordered fee-table">
@@ -97,6 +97,25 @@
 		{% endif %} 
 	{% endfor %}  
 
+	{% if entry.calendarList %}
+		<div class="row">
+			{% for block in entry.calendarList %} 
+				{% if block.type == "header" %}
+					<div class="col m12"><h3>{{ block.header }}</h3></div>
+				{% elseif block.type == "trimesterGroup" %}
+					<div class="trimester col s12 l4">
+						<h4>{{ block.trimester }}</h4>
+						<dl>
+						{% for row in block.dates %}
+							<dt>{{ row.date }}</dt>
+							<dd>{{ row.event }}</dd>
+						{% endfor %}
+						</dl>
+					</div>
+				{% endif %} 
+			{% endfor %}  
+		</div>
+	{% endif %}
 
 
 		</article> 

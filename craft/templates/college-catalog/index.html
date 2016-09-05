@@ -11,9 +11,11 @@
  #}
 
 {% extends "_layout" %}
-{% set title = "College Catalog" %}
+{% set title = entry.title %}
 
 {% block content %}
+{% cache %}
+
 	<h1>College Catalog</h1>
 	<div class="row">
 		<div class="col s12">
@@ -30,17 +32,43 @@
 			<h5>Contents</h5>
 			<ul>
 			{% for entry in craft.entries.section('collegeCatalogEntries').find() %}
-				<li><a href="#jump{{ entry.id }}">{{ entry.title }}</a></li>
+				{% if entry.level == "1" %}
+				<li><a href="#jump{{ entry.id }}">{{ entry.title }}</a>
+					{% if entry.hasDescendants %}
+					{% set children1 = entry.getChildren() %}
+						<ul>
+							{% for entry in children1.find() %}
+								{% if entry.level == "2" %}
+									<li><a href="#jump{{ entry.id }}">{{ entry.title }}</a>
+										{% if entry.hasDescendants %}
+										{% set children2 = entry.getChildren() %}
+											<ul>
+												{% for entry in children2.find() %}
+													<li><a href="#jump{{ entry.id }}">{{ entry.title }}</a></li> 
+												{% endfor %}
+											</ul>
+										{% endif %}
+									</li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</li>
+				{% endif %} 
 			{% endfor %}
 			</ul>
 		</div>
-		<div class="col m8">
+		<div class="col m8" id="college-catalog">
 			
 
 	{% for entry in craft.entries.section('collegeCatalogEntries').find() %}
 		<a name="jump{{ entry.id }}"></a>
+		
+		{% if entry.level == "1" %}{% set tag = "h3" %}{% endif %}
+		{% if entry.level == "2" %}{% set tag = "h4" %}{% endif %}
+		{% if entry.level == "3" %}{% set tag = "h5" %}{% endif %}
 		<article>
-			<h3>{{ entry.title }}</h3> 
+			<{{ tag }}{% if loop.index == "1" %} class="first"{% endif %}>{{ entry.title }}</{{ tag }}> 
 
 			{% for block in entry.contentMatrix %}
 
@@ -71,4 +99,5 @@
 	{% endfor %}
 		</div>
 	</div>
+	{% endcache %}
 {% endblock %}

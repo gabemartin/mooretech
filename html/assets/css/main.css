@@ -2315,8 +2315,8 @@ table, th, td {
 table {
   width: 100%;
   display: table; }
-  table.bordered > thead > tr,
-  table.bordered > tbody > tr {
+  table.bordered > thead > tr, #college-catalog table > thead > tr,
+  table.bordered > tbody > tr, #college-catalog table > tbody > tr {
     border-bottom: 1px solid #d0d0d0; }
   table.striped > tbody > tr:nth-child(odd) {
     background-color: #f2f2f2; }
@@ -2387,16 +2387,16 @@ td, th {
     table.responsive-table thead {
       border: 0;
       border-right: 1px solid #d0d0d0; }
-    table.responsive-table.bordered th {
+    table.responsive-table.bordered th, #college-catalog table.responsive-table th {
       border-bottom: 0;
       border-left: 0; }
-    table.responsive-table.bordered td {
+    table.responsive-table.bordered td, #college-catalog table.responsive-table td {
       border-left: 0;
       border-right: 0;
       border-bottom: 0; }
-    table.responsive-table.bordered tr {
+    table.responsive-table.bordered tr, #college-catalog table.responsive-table tr {
       border: 0; }
-    table.responsive-table.bordered tbody tr {
+    table.responsive-table.bordered tbody tr, #college-catalog table.responsive-table tbody tr {
       border-right: 1px solid #d0d0d0; } }
 
 .collection {
@@ -2432,7 +2432,7 @@ td, th {
         text-align: center; }
       .collection .collection-item.avatar .title {
         font-size: 16px; }
-      .collection .collection-item.avatar p {
+      .collection .collection-item.avatar p, .collection .collection-item.avatar .trimester dd, .trimester .collection .collection-item.avatar dd {
         margin: 0; }
       .collection .collection-item.avatar .secondary-content {
         position: absolute;
@@ -3484,7 +3484,7 @@ small {
     padding: 20px;
     -webkit-border-radius: 0 0 2px 2px;
             border-radius: 0 0 2px 2px; }
-    .card .card-content p {
+    .card .card-content p, .card .card-content .trimester dd, .trimester .card .card-content dd {
       margin: 0;
       color: inherit; }
     .card .card-content .card-title {
@@ -4089,7 +4089,7 @@ button.btn-floating {
   border-bottom: 1px solid #ddd;
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
-  .collapsible-body p {
+  .collapsible-body p, .collapsible-body .trimester dd, .trimester .collapsible-body dd {
     margin: 0;
     padding: 2rem; }
 
@@ -4769,11 +4769,11 @@ textarea {
 /* Checkboxes
    ========================================================================== */
 /* CUSTOM CSS CHECKBOXES */
-form p {
+form p, form .trimester dd, .trimester form dd {
   margin-bottom: 10px;
   text-align: left; }
 
-form p:last-child {
+form p:last-child, form .trimester dd:last-child, .trimester form dd:last-child {
   margin-bottom: 0; }
 
 /* Remove default checkbox */
@@ -5918,7 +5918,7 @@ input[type=range]:focus::-ms-fill-upper {
         left: 15%;
         width: 70%;
         opacity: 0; }
-        .slider .slides li .caption p {
+        .slider .slides li .caption p, .slider .slides li .caption .trimester dd, .trimester .slider .slides li .caption dd {
           color: #e0e0e0; }
       .slider .slides li.active {
         z-index: 2; }
@@ -5979,7 +5979,7 @@ input[type=range]:focus::-ms-fill-upper {
         font-size: 24px;
         font-weight: 500;
         line-height: 32px; }
-      .carousel.carousel-slider .carousel-item p {
+      .carousel.carousel-slider .carousel-item p, .carousel.carousel-slider .carousel-item .trimester dd, .trimester .carousel.carousel-slider .carousel-item dd {
         font-size: 15px; }
   .carousel .carousel-item {
     display: none;
@@ -6738,13 +6738,16 @@ main#content .modal .modal-content {
     color: #231F20;
     margin: 0;
     padding-top: 1rem; }
-  main#content .modal .modal-content p, main#content .modal .modal-content li {
+  main#content .modal .modal-content p, main#content .modal .modal-content .trimester dd, .trimester main#content .modal .modal-content dd, main#content .modal .modal-content li {
     font-size: .8rem; }
-    main#content .modal .modal-content p.bump, main#content .modal .modal-content li.bump {
+    main#content .modal .modal-content p.bump, main#content .modal .modal-content .trimester dd.bump, .trimester main#content .modal .modal-content dd.bump, main#content .modal .modal-content li.bump {
       font-size: 1rem;
       border-bottom: 1px solid #ccc; }
-  main#content .modal .modal-content .answer p {
+  main#content .modal .modal-content .answer p, main#content .modal .modal-content .answer .trimester dd, .trimester main#content .modal .modal-content .answer dd {
     margin-top: 0; }
+
+main#content table.programs tr:last-child {
+  border-bottom: 0; }
 
 main#content .card .card-title {
   font-family: 'Alfa Slab One',serif;
@@ -6760,7 +6763,7 @@ main#content .card .card-title {
   main#content .card .card-title .bg {
     background-color: rgba(0, 0, 0, 0.3); }
 
-main#content .card .card-content p {
+main#content .card .card-content p, main#content .card .card-content .trimester dd, .trimester main#content .card .card-content dd {
   font-size: .8rem;
   line-height: 1.4; }
 
@@ -6782,15 +6785,30 @@ main#content h1 {
 
 main#content h1.center {
   color: #00597b;
-  font-size: 1.4rem; }
+  font-size: 1.4rem;
+  margin-top: 2rem; }
 
 main#content h2 {
-  font-size: 1.6rem; }
+  font-size: 2rem; }
 
 main#content h3 {
-  font-size: 1.2rem; }
+  font-size: 1.4rem;
+  color: #231F20; }
 
-main#content p, main#content li {
+main#content h4 {
+  font-size: .9rem;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: #231F20; }
+
+main#content h5 {
+  font-family: Georgia, serif;
+  font-weight: bold;
+  font-size: .8rem;
+  letter-spacing: normal;
+  color: #231F20; }
+
+main#content p, main#content .trimester dd, .trimester main#content dd, main#content li {
   font-size: .9rem;
   line-height: 1.8; }
 
@@ -6798,7 +6816,7 @@ main#content .sidebar h5 {
   font-size: 1rem;
   margin-bottom: .5rem; }
 
-main#content .sidebar p {
+main#content .sidebar p, main#content .sidebar .trimester dd, .trimester main#content .sidebar dd {
   margin: 0 0 2rem 0; }
 
 main#content .sidebar-program-list > div, main#content .sidebar-college-catalog-toc > div {
@@ -6814,23 +6832,58 @@ main#content .sidebar-program-list h5, main#content .sidebar-college-catalog-toc
   padding-bottom: .3rem;
   font-size: 1rem; }
 
-main#content .sidebar-program-list p, main#content .sidebar-college-catalog-toc p {
+main#content .sidebar-program-list p, main#content .sidebar-program-list .trimester dd, .trimester main#content .sidebar-program-list dd, main#content .sidebar-college-catalog-toc p, main#content .sidebar-college-catalog-toc .trimester dd, .trimester main#content .sidebar-college-catalog-toc dd {
   font-family: 'Montserrat', sans-serif;
   line-height: 1.2;
   margin: 0;
   padding: 0; }
 
 main#content .sidebar-program-list ul, main#content .sidebar-college-catalog-toc ul {
-  padding-left: 1rem; }
+  padding-left: 0; }
+  main#content .sidebar-program-list ul ul, main#content .sidebar-college-catalog-toc ul ul {
+    padding-left: 1rem; }
+  main#content .sidebar-program-list ul > li, main#content .sidebar-college-catalog-toc ul > li {
+    list-style: none; }
+    main#content .sidebar-program-list ul > li a, main#content .sidebar-college-catalog-toc ul > li a {
+      color: #006c94; }
+      main#content .sidebar-program-list ul > li a:hover, main#content .sidebar-college-catalog-toc ul > li a:hover {
+        color: #0091c7;
+        text-decoration: underline; }
 
 main#content .sidebar-program-list li, main#content .sidebar-college-catalog-toc li {
-  line-height: 1.2;
+  line-height: 1;
   margin-bottom: 1rem;
   font-family: 'Montserrat', sans-serif;
-  font-size: .8rem; }
+  font-size: .8rem;
+  margin: 0;
+  font-weight: bold; }
+  main#content .sidebar-program-list li a, main#content .sidebar-college-catalog-toc li a {
+    padding: 10px 0;
+    display: block;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px; }
+  main#content .sidebar-program-list li li, main#content .sidebar-college-catalog-toc li li {
+    font-size: .8rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    list-style: square;
+    font-weight: normal; }
+    main#content .sidebar-program-list li li a, main#content .sidebar-college-catalog-toc li li a {
+      border-bottom: none;
+      padding: 5px 0; }
+    main#content .sidebar-program-list li li li, main#content .sidebar-college-catalog-toc li li li {
+      list-style: circle;
+      font-family: georgia; }
 
 main#content .sidebar-program-list .valign-wrapper, main#content .sidebar-college-catalog-toc .valign-wrapper {
   min-height: 50px; }
+
+@media only screen and (max-width: 992px) {
+  main#content .modal {
+    width: 100%;
+    height: 100% !important;
+    max-height: 100% !important;
+    top: 0 !important; } }
 
 .dividers {
   border-bottom: 1px solid #ccc;
@@ -6839,14 +6892,14 @@ main#content .sidebar-program-list .valign-wrapper, main#content .sidebar-colleg
 .fee-table th {
   background-color: #eee; }
 
-.fee-table td, .fee-table p {
+.fee-table td, .fee-table p, .fee-table .trimester dd, .trimester .fee-table dd {
   font-size: 1rem; }
 
 .fee-table .amt {
   width: 20%;
   text-align: center; }
 
-.fee-table p {
+.fee-table p, .fee-table .trimester dd, .trimester .fee-table dd {
   margin: 0;
   padding: 0; }
 
@@ -6894,6 +6947,29 @@ footer#footer {
     font-size: .6rem;
     line-height: 1.2;
     padding: 10px 2rem; }
+
+ul#mobile-demo.side-nav {
+  -webkit-overflow-scrolling: touch;
+  width: 100%; }
+  ul#mobile-demo.side-nav li, ul#mobile-demo.side-nav ul {
+    margin: 0;
+    padding: 0;
+    line-height: 1; }
+  ul#mobile-demo.side-nav a {
+    font-weight: normal;
+    font-size: .6rem;
+    line-height: 1.2;
+    padding: 16px 1rem;
+    margin: 0;
+    display: block;
+    font-size: 1rem;
+    font-weight: bold;
+    height: auto;
+    border-bottom: 1px solid #eee; }
+  ul#mobile-demo.side-nav ul li a {
+    font-size: .8rem;
+    font-weight: normal;
+    color: #006c94; }
 
 .notice {
   background-color: #ffffcc; }
@@ -6985,11 +7061,15 @@ a.btn, a.btn-large {
 
 #homepage-feature {
   background-color: #006c94;
-  background: #006c94 url("/assets/images/general/homepage-feature-bgi.jpg") center center no-repeat;
+  background-position: center center;
+  background-repeat: no-repeat;
   background-size: cover;
-  padding: 4rem 0;
-  margin-top: -4.1rem; }
-  #homepage-feature h1, #homepage-feature h2, #homepage-feature p {
+  margin-top: -4.1rem;
+  padding: 2rem 0; }
+  @media only screen and (max-width: 992px) {
+    #homepage-feature {
+      padding: 2rem 0 1rem; } }
+  #homepage-feature h1, #homepage-feature h2, #homepage-feature p, #homepage-feature .trimester dd, .trimester #homepage-feature dd {
     color: #fff; }
   #homepage-feature h1 {
     letter-spacing: 1px;
@@ -6997,6 +7077,10 @@ a.btn, a.btn-large {
   #homepage-feature h2 {
     font-family: 'Alfa Slab One',serif;
     font-size: 1.2rem; }
+  @media only screen and (min-width: 993px) {
+    #homepage-feature p, #homepage-feature .trimester dd, .trimester #homepage-feature dd {
+      font-size: 1.3rem;
+      line-height: 1.2; } }
   #homepage-feature a.btn, #homepage-feature a.btn-large {
     background-color: #FFF;
     color: #006c94; }
@@ -7004,3 +7088,111 @@ a.btn, a.btn-large {
     margin: 0;
     padding: 0;
     display: block; }
+
+.download-document a {
+  padding: 10px 20px;
+  position: relative;
+  overflow: hidden;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
+  background-color: #FFF;
+  -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border: 1px solid #039BE5;
+  display: inline-block;
+  line-height: 34px;
+  color: #006c94; }
+  .download-document a svg {
+    margin-top: 5px;
+    float: left;
+    margin-right: .5rem;
+    fill: #006c94; }
+  .download-document a:hover {
+    border-color: #006c94; }
+  .download-document a em {
+    color: #999; }
+
+.download-document img {
+  max-width: 30px;
+  float: left;
+  margin-right: 10px; }
+
+.trimester h3 {
+  padding-bottom: .5rem;
+  border-bottom: 1px solid #ccc; }
+
+.trimester dt {
+  font-weight: bold;
+  font-size: .8rem; }
+
+.trimester dd {
+  margin: 0 0 1rem 0;
+  line-height: 1.2 !important; }
+
+@media only screen and (max-width: 992px) {
+  .trimester dt, .trimester dd {
+    display: inline-block; }
+  .trimester dt {
+    width: 40%; }
+  .trimester dd {
+    width: 50%; } }
+
+@media only screen and (max-width: 600px) {
+  .trimester dt, .trimester dd {
+    display: block;
+    width: 100%; } }
+
+.news-articles article {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  padding-top: 1rem; }
+  .news-articles article:last-child {
+    border-bottom: none; }
+  .news-articles article a {
+    font-style: italic;
+    font-size: 90%;
+    line-height: 1.3 !important;
+    display: block;
+    background-repeat: no-repeat;
+    padding-left: 24px;
+    overflow: hidden; }
+
+.messaging-system-cta {
+  text-align: center;
+  margin: 0 0 1rem 0; }
+  .messaging-system-cta a {
+    text-align: left;
+    padding: .5rem 1rem .5rem 3.5rem;
+    margin: auto;
+    background-color: #FFF;
+    border: 1px solid #ccc;
+    display: inline-block;
+    -webkit-border-radius: 4px;
+            border-radius: 4px;
+    position: relative;
+    color: #006c94; }
+    .messaging-system-cta a:hover {
+      border: 1px solid #006c94;
+      color: #006c94; }
+  .messaging-system-cta .messaging-icon {
+    float: left;
+    border-right: 1px solid #CCCCCC;
+    padding-right: 10px;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    left: 10px;
+    padding-top: 12px;
+    color: #006C93; }
+    .messaging-system-cta .messaging-icon svg {
+      fill: #CC9900; }
+
+#college-catalog h3 {
+  border-top: 1px solid #eee;
+  padding-top: 1.5em;
+  margin-top: 2rem; }
+  #college-catalog h3.first {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0; }

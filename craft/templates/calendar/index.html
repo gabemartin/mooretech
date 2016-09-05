@@ -4,7 +4,7 @@
 #}
 
 {% extends "_layout" %}
-
+{% set title = entry.title %}
 {% block content %}
 	<h1>{{ entry.title }}</h1>   
 	<div class="video-container">{{ entry.calendarEmbed|raw }} </div>

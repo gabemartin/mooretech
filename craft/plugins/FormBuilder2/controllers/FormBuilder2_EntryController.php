@@ -279,8 +279,10 @@ class FormBuilder2_EntryController extends BaseController
 
       if ($submissionResponseId) {
         // Notify Admin of Submission
-        if ($notificationSettings['notifySubmission'] == '1') {
-          $this->notifyAdminOfSubmission($submissionResponseId, $fileCollection, $form);
+        if (isset($notificationSettings['notifySubmission'])) {
+          if ($notificationSettings['notifySubmission'] == '1') {
+            $this->notifyAdminOfSubmission($submissionResponseId, $fileCollection, $form);
+          }
         }
 
         // Notify Submitter of Submission
@@ -355,16 +357,28 @@ class FormBuilder2_EntryController extends BaseController
     $postData         = $this->filterSubmissionKeys($postData);
 
     $attributes             = $form->getAttributes();
+    $formSettings           = $attributes['formSettings'];
     $notificationSettings   = $attributes['notificationSettings'];
-    $emailField             = $notificationSettings['submitterEmail'];
 
-    // Template Variables
-    $variables['form']      = $form;
-    $variables['data']      = $postData;
+    $variables['form']                  = $form;
+    $variables['files']                 = $files;
+    $variables['formSettings']          = $formSettings;
+    $variables['emailSettings']         = $notificationSettings['emailSettings'];
+    $variables['notificationSettings']  = $notificationSettings;
+    $variables['templateSettings']      = $notificationSettings['emailTemplate'];
+    $variables['sendSubmission']        = $notificationSettings['emailSettings']['sendSubmitterSubmissionData'];
+    $emailField                         = $notificationSettings['submitterEmail'];
+    $variables['data']                  = $postData;
 
-    // Template
-    craft()->path->setTemplatesPath(craft()->path->getPluginsPath());
-    $message  = craft()->templates->render('formbuilder2/templates/email/text-submitter', $variables);
+    if ($notificationSettings['emailTemplateSubmitter'] && $notificationSettings['emailTemplateSubmitter'] != '') {
+      $template = craft()->formBuilder2_template->getTemplateByHandle($notificationSettings['emailTemplateSubmitter']);
+      $variables['template'] = $template;
+    }
+
+    $oldPath = craft()->templates->getTemplatesPath();
+    craft()->templates->setTemplatesPath(craft()->path->getPluginsPath());
+    $message  = craft()->templates->render('formbuilder2/templates/email/layouts/html', $variables);
+    craft()->templates->setTemplatesPath($oldPath);
 
     // Email
     $toEmail = $postData[$emailField];
@@ -388,11 +402,6 @@ class FormBuilder2_EntryController extends BaseController
     $postData         = $submission->submission;
     $postData         = $this->filterSubmissionKeys($postData);
 
-    craft()->path->setTemplatesPath(craft()->path->getPluginsPath());
-    $templatePath = craft()->path->getPluginsPath() . 'plugins/formbuilder2/templates/email/';
-    $customTemplatePath = craft()->path->getPluginsPath() . 'formbuilder2/templates/custom/email/';
-    $extension = '.twig';
-
     // Uploaded Files
     if ($postUploads) {
       foreach ($postUploads as $key => $id) {
@@ -406,29 +415,19 @@ class FormBuilder2_EntryController extends BaseController
     $attributes             = $form->getAttributes();
     $formSettings           = $attributes['formSettings'];
     $notificationSettings   = $attributes['notificationSettings'];
-    $templateSettings       = $notificationSettings['templateSettings'];
-
-    // Get Logo
-    if ($notificationSettings['templateSettings']['emailCustomLogo'] != '') {
-      $criteria         = craft()->elements->getCriteria(ElementType::Asset);
-      $criteria->id     = $notificationSettings['templateSettings']['emailCustomLogo'];
-      $criteria->limit  = 1;
-      $customLogo       = $criteria->find();
-    } else {
-      $customLogo = '';
-    }
 
     $variables['form']                  = $form;
     $variables['files']                 = $files;
     $variables['formSettings']          = $formSettings;
     $variables['emailSettings']         = $notificationSettings['emailSettings'];
-    $variables['templateSettings']      = $notificationSettings['templateSettings'];
-    if ($notificationSettings['templateSettings']['emailCustomLogo'] != '') {
-      $variables['customLogo']          = $customLogo;
-    }
-
-    if ($notificationSettings['emailSettings']['sendSubmissionData'] == '1') {
-      $variables['data']                = $postData;
+    $variables['notificationSettings']  = $notificationSettings;
+    $variables['templateSettings']      = $notificationSettings['emailTemplate'];
+    $variables['sendSubmission']        = $notificationSettings['emailSettings']['sendSubmissionData'];
+    $variables['data'] = $postData;
+    
+    if ($notificationSettings['emailTemplate'] && $notificationSettings['emailTemplate'] != '') {
+      $template = craft()->formBuilder2_template->getTemplateByHandle($notificationSettings['emailTemplate']);
+      $variables['template'] = $template;
     }
 
     $customSubject = '';
@@ -439,19 +438,10 @@ class FormBuilder2_EntryController extends BaseController
       }
     }
 
-    if ($templateSettings['emailTemplateStyle'] == 'html') {
-      if (IOHelper::fileExists($customTemplatePath . 'html' . $extension)) {
-        $message  = craft()->templates->render('formbuilder2/templates/custom/email/html', $variables);
-      } else {
-        $message  = craft()->templates->render('formbuilder2/templates/email/html', $variables);
-      }
-    } else {
-      if (IOHelper::fileExists($customTemplatePath . 'text' . $extension)) {
-        $message  = craft()->templates->render('formbuilder2/templates/custom/email/text', $variables);
-      } else {
-        $message  = craft()->templates->render('formbuilder2/templates/email/text', $variables);
-      }
-    }
+    $oldPath = craft()->templates->getTemplatesPath();
+    craft()->templates->setTemplatesPath(craft()->path->getPluginsPath());
+    $message  = craft()->templates->render('formbuilder2/templates/email/layouts/html', $variables);
+    craft()->templates->setTemplatesPath($oldPath);
 
     // Custom Emails
     $customEmail = '';

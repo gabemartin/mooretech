@@ -13,6 +13,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
 <head>
 	<meta charset="utf-8" />
+	<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="PUBLIC" max-age="90000">
 	<title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
 	<link rel="home" href="{{ siteUrl }}" />
 
@@ -34,43 +35,43 @@
 	<header>
 		<nav class="top-nav"> 
 			<div class="container">
-			<a href="{{ siteUrl }}" class="brand-logo left"><img src="/assets/images/logo.png" alt="{{ siteName }}"></a> 
-			<a href="#" data-activates="mobile-demo" class="button-collapse right"><i class="material-icons">menu</i></a>
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li {% if craft.request.firstSegment == '/' %}class="active"{% endif %}><a href="{{ url('/') }}">Home</a></li>
-				<li {% if craft.request.firstSegment == 'programs' %}class="active"{% endif %}><a href="{{ url('programs') }}">Programs</a></li>
-				<li {% if craft.request.firstSegment == 'admissions' %}class="active"{% endif %}><a href="{{ url('admissions') }}">Admissions</a></li>
-				<li {% if craft.request.firstSegment == 'about' %}class="active"{% endif %}><a href="{{ url('about') }}">About</a></li>
-				<li {% if craft.request.firstSegment == 'contact-us' %}class="active"{% endif %}><a href="{{ url('contact-us') }}">Contact Us</a></li>
-			</ul>
+				<a href="{{ siteUrl }}" class="brand-logo left"><img src="/assets/images/logo.png" alt="{{ siteName }}"></a> 
+				<a href="#" data-activates="mobile-demo" class="button-collapse right"><i class="material-icons">menu</i></a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<li {% if craft.request.firstSegment == '/' %}class="active"{% endif %}><a href="{{ url('/') }}">Home</a></li>
+					<li {% if craft.request.firstSegment == 'programs' %}class="active"{% endif %}><a href="{{ url('programs') }}">Programs</a></li>
+					<li {% if craft.request.firstSegment == 'admissions' %}class="active"{% endif %}><a href="{{ url('admissions') }}">Admissions</a></li>
+					<li {% if craft.request.firstSegment == 'about' %}class="active"{% endif %}><a href="{{ url('about') }}">About</a></li>
+					<li {% if craft.request.firstSegment == 'contact-us' %}class="active"{% endif %}><a href="{{ url('contact-us') }}">Contact Us</a></li>
+				</ul>
 			</div> 
 			<ul class="side-nav" id="mobile-demo">
-				<li {% if craft.request.firstSegment == '/' %}class="active"{% endif %}><a href="{{ url('/') }}">Home</a></li>
-				<li {% if craft.request.firstSegment == 'programs' %}class="active"{% endif %}><a href="{{ url('programs') }}">Programs</a>
+				<li><a href="{{ url('/') }}">Home</a></li>
+				<li><a href="{{ url('programs') }}">Programs</a>
 					<ul>
-						<li><a {% if craft.request.lastSegment == 'diploma-and-certificate' %}class="active" {% endif %} href="/programs/diploma-and-certificate">Diploma and Certificate</a></li>
-						<li><a {% if craft.request.lastSegment == 'associate-degree' %}class="active" {% endif %} href="/programs/associate-degree">Associate Degree</a></li> 
+						<li><a href="/programs/diploma-and-certificate">Diploma and Certificate</a></li>
+						<li><a href="/programs/associate-degree">Associate Degree</a></li> 
 						{% for entry in craft.entries.section('programs').find() %}
 							<li><a href="{{ entry.url }}">{{ entry.title }}</a></li>
 						{% endfor %}
-					</ul>
-
-
-
-
-
-				</li>
-				<li {% if craft.request.firstSegment == 'admissions' %}class="active"{% endif %}><a href="{{ url('admissions') }}">Admissions</a>
-				    <ul>
-						<li><a {% if craft.request.lastSegment == 'calendar' %}class="active" {% endif %} href="/admissions/calendar">Calendar</a></li>
-						<li><a {% if craft.request.lastSegment == 'college-catalog' %}class="active" {% endif %} href="/admissions/college-catalog">College Catalog</a></li>
-						<li><a {% if craft.request.lastSegment == 'fees' %}class="active" {% endif %} href="/admissions/fees">Fees</a></li>
-						<li><a {% if craft.request.lastSegment == 'enrollment-steps' %}class="active" {% endif %} href="/admissions/enrollment-steps">Enrollment</a></li>
-						<li><a {% if craft.request.lastSegment == 'financial-aid' %}class="active" {% endif %} href="/admissions/financial-aid">Financial Aid</a></li>
 					</ul> 
 				</li>
-				<li {% if craft.request.firstSegment == 'about' %}class="active"{% endif %}><a href="{{ url('about') }}">About</a></li>
-				<li {% if craft.request.firstSegment == 'contact-us' %}class="active"{% endif %}><a href="{{ url('contact-us') }}">Contact Us</a></li>
+				<li><a href="{{ url('admissions') }}">Admissions</a>
+				    <ul>
+						<li><a href="/admissions/calendar">Calendar</a></li>
+						<li><a href="/admissions/college-catalog">College Catalog</a></li>
+						<li><a href="/admissions/fees">Fees</a></li>
+						<li><a href="/admissions/enrollment-steps">Enrollment</a></li>
+						<li><a href="/admissions/financial-aid">Financial Aid</a></li>
+					</ul> 
+				</li>
+				<li><a href="{{ url('about') }}">About</a>
+					<ul>
+						<li><a href="/about/news">Moore Tech in the News</a></li> 
+						<li><a href="/about/partners-and-donors">Partners &amp; Donors</a></li> 
+					</ul>
+				</li>
+				<li}><a href="{{ url('contact-us') }}">Contact Us</a></li>
 			</ul>
 		</nav> 
 	</header> 
@@ -96,6 +97,14 @@
 				<ul class="right">
 					<li><a {% if craft.request.lastSegment == 'diploma-and-certificate' %}class="active" {% endif %} href="/programs/diploma-and-certificate">Diploma and Certificate</a></li>
 					<li><a {% if craft.request.lastSegment == 'associate-degree' %}class="active" {% endif %} href="/programs/associate-degree">Associate Degree</a></li> 
+				</ul>
+			</nav> 
+			{% endif %}
+			{% if craft.request.firstSegment == 'about' %} 
+		    <nav class="col s12 sub-nav">
+				<ul class="right">
+					<li><a {% if craft.request.lastSegment == 'news' %}class="active" {% endif %} href="/about/news">Moore Tech in the News</a></li> 
+					<li><a {% if craft.request.lastSegment == 'partners-and-donors' %}class="active" {% endif %} href="/about/partners-and-donors">Partners &amp; Donors</a></li> 
 				</ul>
 			</nav> 
 			{% endif %}

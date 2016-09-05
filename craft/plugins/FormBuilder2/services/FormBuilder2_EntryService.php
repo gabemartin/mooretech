@@ -288,7 +288,7 @@ class FormBuilder2_EntryService extends BaseApplicationComponent
     $email->fromName  = $notificationSettings['publicFormName'] ? $notificationSettings['publicFormName'] : $form->name;
     $email->toEmail   = $toEmail;
     $email->subject   = $notificationSettings['submitterEmailSubject'] ? $notificationSettings['submitterEmailSubject'] : Craft::t('Thanks For Submission');
-    $email->body      = $message;
+    $email->htmlBody      = $message;
 
     if (!craft()->email->sendEmail($email)) {
       $errors = true;
@@ -314,8 +314,10 @@ class FormBuilder2_EntryService extends BaseApplicationComponent
     } else {
       $subject = $notificationSettings['emailSettings']['emailSubject'];
     }
+
     if ($customEmail != '') {
-      ArrayHelper::prependOrAppend($toEmails, $customEmail, true);
+      $theEmailAddress = explode('|', $customEmail);
+      ArrayHelper::prependOrAppend($toEmails, $theEmailAddress[0], true);
     }
 
     foreach ($toEmails as $toEmail) {
@@ -328,7 +330,7 @@ class FormBuilder2_EntryService extends BaseApplicationComponent
       $email->fromName  = $form->name;
       $email->toEmail   = $toEmail;
       $email->subject   = $subject;
-      $email->body      = $message;
+      $email->htmlBody  = $message;
 
       // Attach files to email
       if (!empty($files)) {

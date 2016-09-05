@@ -43,7 +43,7 @@ module.exports = function(grunt) {
           ext: '.min.css'
         }]
       }
-    }, 
+    },  
     watch: {
       scripts: {
         files: ['**/*.sass', 'node_modules/materialize-css/sass/*.scss'],

@@ -18,7 +18,7 @@
  #}
 
 {% extends "_layout" %}
-
+{% set title = entry.title %}
 {% block content %} 
 
 <h1>{{ entry.title }}</h1>
@@ -27,70 +27,65 @@
  <div class="row">
    <div class="col m8">
      
-
-    {% set form = craft.formBuilder2.getFormByHandle('contact') %}
-    {% set formSettings = form.formSettings %}
-    {% set spamProtectionSettings = form.spamProtectionSettings %}
-    {% set tabs = form.fieldLayout.getFieldLayout().getTabs() %}
-    {% set scripts = craft.formBuilder2.includeScripts(form) %}
-
-    <form method="post" accept-charset="utf-8" name="{{ form.handle }}" class="formbuilder2" id="{{ form.handle }}"{% if formSettings.hasFileUploads == '1' %} enctype="multipart/form-data"{% endif %}>
-      <input type="hidden" name="action" value="formBuilder2/entry/submitEntry">
-      <input type="hidden" name="redirect" data-custom-redirect="{{ formSettings.formRedirect.customRedirect }}" value="{{ formSettings.formRedirect.customRedirectUrl }}">
-      <input type="hidden" name="formHandle" value="{{ form.handle }}">
-      {% if spamProtectionSettings.spamTimeMethod == '1' %}<input type="hidden" name="spamTimeMethod" value="{{ 'now'|date('U') }}">{% endif %}
-      {% if spamProtectionSettings.spamHoneypotMethod == '1' %}<div style="display:none;"><label for="email-addresss-new">{{ spamProtectionSettings.spamHoneypotMethodMessage }}</label><input name="email-address-new" value="" id="email-addresss-new"></div>{% endif %}
-      {{ getCsrfInput() }}
-      
-      {# Fields #}
-      {% for tab in tabs %}
-        {% set fields = tab.getFields() %} 
-          {% for field in fields %}  
-
-              {% if field.id == 274 %}
-                <div class="row">
-                  <div class="input-field col m6 s12"> 
-                    {% set input = craft.formBuilder2.getInputHtml(field) %}
-                    {{ input |raw }}
-                  </div>
-              {% endif %}
-
-              {% if field.id == 275 %}
-                  <div class="input-field col m6 s12">
-                    {% set input = craft.formBuilder2.getInputHtml(field) %}
-                    {{ input |raw }}
-                  </div>
-                </div>
-              {% endif %} 
-                
-              {% if field.id == 276 %}
-                <div class="row">
-                  <div class="input-field col s12">
-                    {% set input = craft.formBuilder2.getInputHtml(field) %}
-                    {{ input |raw }}
-                  </div>
-                </div>
-              {% endif %} 
-
-          {% endfor %}  
-      {% endfor %}
-
-      {# Errors/Success Messages #}
-      <div class="notifications">
-        <p class="notification error-message">{{ craft.session.getFlash('error') | raw }}</p>
-        <p class="notification success-message">{{ craft.session.getFlash('success') | raw }}</p>
-        {% set errors = (errors is defined ? errors : null) %}
-        {% if errors %}
+{% macro errorList(errors) %}
+    {% if errors %}
         <ul class="errors">
-          {% for error in errors %}
-            <li>{{ error }}</li>
-          {% endfor %}
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
         </ul>
-        {% endif %}
-      </div>
+    {% endif %}
+{% endmacro %}
 
-      <button type="submit" class="btn-large waves-effect waves-light">{% if formSettings.submitButtonText %}{{ formSettings.submitButtonText }}{% else %}Submit Message{% endif %} <i class="material-icons right">send</i></button>
-    </form>
+{% from _self import errorList %}
+
+<form method="post" action="" accept-charset="UTF-8" id="contactform">
+    {{ getCsrfInput() }}
+    <input type="hidden" name="action" value="contactForm/sendMessage"> 
+
+    <h3><label for="fromName">Your Name</label></h3>
+    <input id="fromName" type="text" name="fromName" value="{% if message is defined %}{{ message.fromName }}{% endif %}">
+    {{ message is defined and message ? errorList(message.getErrors('fromName')) }}
+
+    <h3><label for="fromEmail">Your Email</label></h3>
+    <input id="fromEmail" type="email" name="fromEmail" value="{% if message is defined %}{{ message.fromEmail }}{% endif %}">
+    {{ message is defined and message ? errorList(message.getErrors('fromEmail')) }}
+
+    <h3><label for="subject">Subject</label></h3>
+    <input id="subject" type="text" name="subject" value="{% if message is defined %}{{ message.subject }}{% endif %}">
+    {{ message is defined and message ? errorList(message.getErrors('subject')) }}
+
+    <h3><label for="message">Message</label></h3>
+    <textarea rows="10" cols="40" id="message" name="message">{% if message is defined %}{{ message.message }}{% endif %}</textarea>
+    {{ message is defined and message ? errorList(message.getErrors('message')) }}
+    <input id="honey" name="honey" type="text" style="display: none;">
+    <input type="submit" value="Send">
+</form>
+
+
+
+<script>
+  $('#contactform').submit(function(ev) {
+    // Prevent the form from actually submitting
+    ev.preventDefault();
+
+    // Get the post data
+    var data = $(this).serialize();
+
+    // Send it to the server
+    $.post('/', data, function(response) {
+        if (response.success) {
+            $('#thanks').fadeIn();
+        } else {
+            // response.error will be an object containing any validation errors that occurred, indexed by field name
+            // e.g. response.error.fromName => ['From Name is required']
+            alert('An error occurred. Please try again.');
+        }
+    });
+});
+</script>
+
+
 
    </div>
    <div class="col m4 sidebar">
